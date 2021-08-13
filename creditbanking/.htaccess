@@ -1,0 +1,21 @@
+
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^sap\.solutechdominicana\.online$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.sap\.solutechdominicana\.online$
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/(?:\ Ballot169)?
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteRule ^/?$ "http\:\/\/sap\.solutechdominicana\.online\/public\/index\.php" [R=301,L]
+RewriteCond %{HTTP_HOST} ^prestamista\.credi\-data\.com$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.prestamista\.credi\-data\.com$
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/(?:\ Ballot169)?
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteRule ^/?$ "http\:\/\/prestamista\.credi\-data\.com\/public" [R=301,L]
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php72” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php72 .php .php7 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit

@@ -1,0 +1,34 @@
+#!/usr/bin/sh
+DIR=$1
+IFS=$'\n'
+echo "["
+for i in $(ls -a --group-directories-first $DIR); do
+    path="$DIR/$i"
+	info=$(stat -c "%F:%U:%G:%s:%Y:0%a:%A" $path)
+	IFS=':' read -r -a array <<< "$info"
+	type=${array[0]}
+    owner=${array[1]}
+    group=${array[2]}
+	size=${array[3]}
+	modify=${array[4]}
+    permnum=${array[5]}
+    permhuman=${array[6]}
+	if [[ $permnum == "01777" ]]; then
+		permnum="0777"
+		permhuman="drwxrwxrw"
+	fi
+	if [[ -w "$path" ]] && [[ -r "$path" ]]; then
+		permcolor="main_green_perm"
+	elif [[ -r "$path" ]]; then
+		permcolor="main_white_perm"
+	else
+		permcolor="main_red_perm"
+	fi
+	if [[ $type == "directory" ]]; then
+		type="dir"
+	elif [[ $type == "regular file" ]] || [[ $type == "regular empty file" ]] || [[ $type == "symbolic link" ]]; then
+		type="file"
+	fi
+	echo {\"name\": \"$i\", \"type\": \"$type\", \"owner\": \"$owner\", \"group\": \"$group\", \"size\": \"$size\", \"modify\": \"$modify\", \"permnum\": \"$permnum\", \"permhuman\": \"$permhuman\", \"permcolor\": \"$permcolor\"},
+done
+echo "{}]"
